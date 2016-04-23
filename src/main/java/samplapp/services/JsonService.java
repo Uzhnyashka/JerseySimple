@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 @Path("/json/metallica")
 public class JsonService {
 
-    static Track track1 = null;
+    static String title = "Enter Sandman", singer = "Metallica";
 
     @GET
     @Path("/get")
@@ -19,11 +19,10 @@ public class JsonService {
     public Track getTrackInJSON() {
 
         Track track = new Track();
-        track.setTitle("Enter Sandman");
-        track.setSinger("Metallica");
+        track.setTitle(title);
+        track.setSinger(singer);
 
-        if (track1 == null) return track;
-        else return track1;
+        return track;
 
     }
 
@@ -32,8 +31,11 @@ public class JsonService {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response createTrackInJSON(Track track) {
 
+        title = track.getTitle();
+        singer = track.getSinger();
+
         String result = "Track saved : " + track;
-        track1 = track;
+
         return Response.status(201).entity(result).build();
 
     }
